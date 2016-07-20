@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
+</head>
+<body>
+
+	<h1 data-bind="text:info"></h1>
+	<button id="btnName" data-bind="click:getName">Представьтесь</button>
+	<button id="btnLocation" data-bind="click:getLocation">Where are you?</button>
+
+
+	<script>
+		/*document.getElementById("btnName").onclick = function(){
+
+		};*/
+
+		function Customer() {
+			this.name= ko.observable("Guest");
+			this.location= ko.observable("Kiev");
+			this.getName = function(){
+				var name = prompt("How you name?", this.name());
+				this.name(name);
+			};
+			this.getLocation = function(){
+				var location = prompt("Where are you?", this.location());
+				this.location(location);
+			};
+			console.log(this);
+			var customer = this;
+			this.info = ko.computed(function(){
+				console.log(customer);
+				return "Hello " + customer.name() + " from " + customer.location();
+			});
+		}
+		ko.applyBindings(new Customer());
+		//customer.name("Robert");
+		//console.log(customer.name());
+	</script>
+
+	<script id="__bs_script__">//<![CDATA[
+	document.write("<script async src='http://HOST:3000/browser-sync/browser-sync-client.2.13.0.js'><\/script>".replace("HOST", location.hostname));
+	//]]></script>
+</body>
+</html>
