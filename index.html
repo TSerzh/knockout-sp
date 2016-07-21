@@ -11,11 +11,30 @@
 	<button id="btnName" data-bind="click:getName">Представьтесь</button>
 	<button id="btnLocation" data-bind="click:getLocation">Where are you?</button>
 
+	<table>
+		<thead>
+			<tr>
+				<th>Наименование</th>
+				<th>Цена</th>
+			</tr>
+		</thead>
+		<tbody data-bind="foreach:coursesList">
+			<tr>
+				<td data-bind="text:title"></td>
+				<td data-bind="text:price"></td>
+			</tr>
+		</tbody>
+	</table>
+
 
 	<script>
 		/*document.getElementById("btnName").onclick = function(){
 
 		};*/
+		function Course(title, price){
+			this.title = ko.observable(title);
+			this.price = ko.observable(price);
+		}
 
 		function Customer() {
 			this.name= ko.observable("Guest");
@@ -28,12 +47,18 @@
 				var location = prompt("Where are you?", this.location());
 				this.location(location);
 			};
-			console.log(this);
+			//console.log(this);
 			var customer = this;
 			this.info = ko.computed(function(){
 				console.log(customer);
 				return "Hello " + customer.name() + " from " + customer.location();
 			});
+
+			this.coursesList = ko.observableArray([
+				new Course("HTML/CSS", 9150),
+				new Course("WebMastering", 13450),
+				new Course("JavaScript-ECMA", 8950)
+			]);
 		}
 		ko.applyBindings(new Customer());
 		//customer.name("Robert");
